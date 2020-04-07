@@ -12,7 +12,7 @@ import Slider from '@material-ui/core/Slider';
 import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimeActionCreators } from "../../../state/action";
+import { AnimeActionCreators } from "../../../../state/action";
 
 import CheckBoxOutlineBlankSharpIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 import AddIcon from '@material-ui/icons/Add';

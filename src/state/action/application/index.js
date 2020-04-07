@@ -9,7 +9,11 @@ const ApplicationActionTypes = {
 
   JOIN_USER_REQUEST: "JOIN_USER_REQUEST",
   JOIN_USER_ERROR: "JOIN_USER_ERROR",
-  JOIN_USER_SUCCESS: "JOIN_USER_SUCCESS"
+  JOIN_USER_SUCCESS: "JOIN_USER_SUCCESS",
+
+  LOGIN_USER_REQUEST: "LOGIN_USER_REQUEST",
+  LOGIN_USER_ERROR: "LOGIN_USER_ERROR",
+  LOGIN_USER_SUCCESS: "LOGIN_USER_SUCCESS"
 };
 
 // initializeApplication
@@ -27,9 +31,9 @@ function initializeApplicationError(error) {
   };
 }
 
-function initializeApplicationSuccess() {
+function initializeApplicationSuccess(payload) {
   return {
-    payload: { isInitialized: true },
+    payload,
     type: ApplicationActionTypes.INITIALIZE_APPLICATION_SUCCESS
   };
 }
@@ -79,6 +83,29 @@ function joinUserSuccess(data) {
   };
 }
 
+// loginUser
+
+function loginUser(payload) {
+  return {
+    payload,
+    type: ApplicationActionTypes.LOGIN_USER_REQUEST
+  };
+}
+
+function loginUserError(error) {
+  return {
+    payload: { error },
+    type: ApplicationActionTypes.LOGIN_USER_ERROR
+  };
+}
+
+function loginUserSuccess(data) {
+  return {
+    payload: data,
+    type: ApplicationActionTypes.LOGIN_USER_SUCCESS
+  };
+}
+
 
 const ApplicationActionCreators = {
   initializeApplication,
@@ -89,7 +116,10 @@ const ApplicationActionCreators = {
   getInfoSuccess,
   joinUser,
   joinUserError,
-  joinUserSuccess
+  joinUserSuccess,
+  loginUser,
+  loginUserError,
+  loginUserSuccess
 };
 
 export { ApplicationActionTypes, ApplicationActionCreators };

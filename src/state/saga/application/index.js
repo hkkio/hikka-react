@@ -5,7 +5,7 @@ import {
   ApplicationActionCreators,
   ApplicationActionTypes
 } from "../../action";
-import { applicationInitialize, joinUser, getInfo } from "../../../service";
+import { applicationInitialize, joinUser, loginUser, getInfo } from "../../../service";
 
 const handleJoinUserRequest = function*(action) {
   try {
@@ -13,6 +13,22 @@ const handleJoinUserRequest = function*(action) {
     yield put(ApplicationActionCreators.joinUserSuccess(data));
   } catch (error) {
     yield put(ApplicationActionCreators.joinUserError(error));
+  }
+};
+
+const handleLoginUserRequest = function*(action) {
+  try {
+    const data = yield call(loginUser, action.payload);
+
+    yield put(ApplicationActionCreators.loginUserSuccess(data));
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("expire", data.expire);
+  } catch (error) {
+    yield put(ApplicationActionCreators.loginUserError(error));
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("expire");
   }
 };
 
@@ -27,8 +43,8 @@ const handleGetInfoRequest = function*() {
 
 const handleInitializeApplicationRequest = function*() {
   try {
-    yield call(applicationInitialize());
-    yield put(ApplicationActionCreators.initializeApplicationSuccess());
+    const data = yield call(applicationInitialize);
+    yield put(ApplicationActionCreators.initializeApplicationSuccess(data));
   } catch (error) {
     yield put(ApplicationActionCreators.initializeApplicationError(error));
   }
@@ -46,6 +62,10 @@ const Saga = function*() {
   yield takeLatest(
     ApplicationActionTypes.JOIN_USER_REQUEST,
     handleJoinUserRequest
+  );
+  yield takeLatest(
+    ApplicationActionTypes.LOGIN_USER_REQUEST,
+    handleLoginUserRequest
   );
 };
 

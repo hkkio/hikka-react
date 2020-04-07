@@ -20,7 +20,7 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import AddIcon from '@material-ui/icons/Add';
 
 import { useSelector, useDispatch } from 'react-redux';
-import config from "../../application/config";
+import config from "../../../application/config";
 
 const Anime = ({anime, setDrawerState, closeAnime}) => {
 	const makeGenres = () => {

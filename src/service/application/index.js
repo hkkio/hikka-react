@@ -30,11 +30,11 @@ function loginUser(payload) {
 }
 
 function applicationInitialize() {
-  return () => {
-    const delayModifier = 2000;
-    const delay = 10000 + Math.random() * delayModifier;
-    return new Promise(resolve => setTimeout(resolve, delay));
-  };
+  if (localStorage.token == null) {
+  	return {isInitialized: true};
+  } else {
+  	return {isInitialized: false};
+  }
 }
 
 function getInfo() {
@@ -47,4 +47,4 @@ function getInfo() {
 	};
 }
 
-export { applicationInitialize, joinUser, getInfo };
+export { applicationInitialize, joinUser, loginUser, getInfo };

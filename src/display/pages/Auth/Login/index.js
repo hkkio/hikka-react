@@ -10,11 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory, Redirect } from "react-router-dom";
 
 import CloseIcon from '@material-ui/icons/Close';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { ApplicationActionCreators } from "../../../state/action";
+import { ApplicationActionCreators } from "../../../../state/action";
 
 const useStyles = makeStyles(theme => ({
   large: {
@@ -23,26 +24,49 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Login = ({setDrawerState}) => {
+const Login = () => {
+	const [email, setEmail] = useState("");
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const loginUserStatus = useSelector(state => state.application.loginUser);
+
+	let history = useHistory();
+	const dispatch = useDispatch();
+
+    const openSignupPage = () => {
+        history.push('/signup');
+    }
+
+    const login = (e) => {
+    	e.preventDefault();
+		dispatch(ApplicationActionCreators.loginUser({email, password}));
+	}
+
+	if (loginUserStatus == 2) {
+      return <Redirect to="/" />;
+    }
+
 	return (
-		<form noValidate autoComplete="off">
+		<form autoComplete="off" onSubmit={(e) => login(e)}>
 			<Grid container direction="column">
 				<Grid>
-					<Typography component="h2" variant="h5" style={{fontWeight: 600}} align="center">Вхід</Typography>
+					<Typography component="h2" variant="h5" style={{fontWeight: 600}} align="center">Авторизація</Typography>
 				</Grid>
 				<Grid>
-					<TextField required label="Email" margin="normal" fullWidth />
+					<TextField error={loginUserStatus == 1} helperText="Мусить містити валідну email адресу" required label="Email" margin="normal" type="email" fullWidth value={email} onChange={(event) => setEmail(event.target.value)} />
 				</Grid>
 				<Grid>
-					<TextField required label="Пароль" margin="normal" fullWidth />
+					<TextField error={loginUserStatus == 1} helperText="Мінімальна довжина 16 символів" required label="Пароль" margin="normal" type="password" fullWidth value={password} onChange={(event) => setPassword(event.target.value)} />
 				</Grid>
 				<Grid>
-					<Button variant="outlined" fullWidth color="primary" style={{marginTop: 30, marginBottom: 10}}>
+					<Button variant="contained" fullWidth type="submit" color="primary" style={{marginTop: 30, marginBottom: 10}}>
 						Ввійти
 					</Button>
 				</Grid>
 				<Grid>
-					<Typography component="p" variant="subtitle1" align="center">Новий користвувач? <Link onClick={() => setDrawerState({status: true, content: 2}) }>Зареєстуватись</Link></Typography>
+					<Button variant="text" fullWidth color="primary" onClick={() => openSignupPage()}>
+						Зареєстуватись
+					</Button>
 				</Grid>
 			</Grid>
 		</form>
@@ -126,40 +150,4 @@ const SignUp = ({setDrawerState}) => {
 	);
 }
 
-/*function Profile({setDrawerState}) {
-	const classes = useStyles();
-
-	return (
-		<Grid container direction="column">
-			<Grid>
-				<Typography component="h2" variant="h5" style={{fontWeight: 600}} align="center">Профіль</Typography>
-			</Grid>
-			<Grid>
-				<Box display="flex" flexDirection="column" alignItems="center" mt={4}>
-					<Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.large} />
-					<Typography component="h3" variant="h6" align="center">olexh</Typography>
-				</Box>
-			</Grid>
-		</Grid>
-	);
-}*/
-
-const DrawerComponent = ({drawerState, setDrawerState, params}) => {
-	return (
-		<SwipeableDrawer anchor="right" open={drawerState.status} onClose={() => setDrawerState({status: false, content: 1})}>
-			<div style={{padding: 20, paddingLeft: 30, paddingRight: 30, width: 500}}>
-	   			<Grid container>
-	   				<Grid item>
-	   					<IconButton onClick={() => setDrawerState({status: false, content: 1})} edge="start" color="inherit">
-					      	<CloseIcon />
-					    </IconButton>
-	   				</Grid>
-	   			</Grid>
-		    	{drawerState.content == 1 && <Login setDrawerState={setDrawerState} />}
-		    	{drawerState.content == 2 && <SignUp setDrawerState={setDrawerState} />}
-		    </div>
-	    </SwipeableDrawer>
-	);
-}
-
-export { DrawerComponent as AuthDrawer };
+export { Login };

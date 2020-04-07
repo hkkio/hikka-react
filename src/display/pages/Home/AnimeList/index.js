@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from '@material-ui/core/Grid';
 
-import { AnimeItem, AnimeItemSceleton } from "./AnimeItem";
+import { AnimeItem, AnimeItemSceleton } from "../../../components/AnimeItem";
 
 
 const AnimeList = ({data, setDrawerState}) => {

@@ -7,7 +7,11 @@ function getAnimeList(payload) {
 	return axios({
 		method: "post",
 		url: config.apiHost + "anime/list",
-		data: payload
+		data: payload,
+		headers: {
+	        'Authentication': localStorage.token,
+	        'Content-Type': 'application/json'
+	    }
 	})
 	.then(response => {
 		return [...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice()];
@@ -20,7 +24,11 @@ function getAnimeList(payload) {
 function getAnime(payload) {
 	return axios({
 		method: "get",
-		url: `${config.apiHost}anime/get/${payload.slug}`
+		url: `${config.apiHost}anime/get/${payload.slug}`,
+		headers: {
+	        'Authentication': localStorage.token,
+	        'Content-Type': 'application/json'
+	    }
 	})
 	.then(response => {
 		return response.data;
