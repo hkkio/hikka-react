@@ -94,16 +94,6 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
 							})
 						}
 		    		</Grid>
-		    		<Grid item md xs xs={12} sm={6}>
-		    			<Typography variant="subtitle2" component="p" gutterBottom>
-							Команда
-						</Typography>
-						{
-							application.teams.map((team, index) => {
-								return <Tag size="small" key={index} disableElevation color={drawerState.teams.includes(team.slug) ? "primary" : "default"} variant="contained" onClick={() => changeTag("teams", team)}>{team.name}</Tag>
-							})
-						}
-		    		</Grid>
 		    		<Grid item md={12} xs={12} sm={12}>
 		    			<Typography variant="subtitle2" component="p" gutterBottom>
 							Жанри

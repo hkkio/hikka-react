@@ -9,61 +9,86 @@ import {
 } from "../pages";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 import theme from './theme';
 
 import { ApplicationActionCreators } from "../../state/action";
 
 const PrivateRoute = ({ children, isAuthenticated, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        isAuthenticated ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
-      }
-    />
-  );
+	return (
+		<Route
+			{...rest}
+			render={({ location }) =>
+				isAuthenticated ? (
+					children
+				) : (
+					<Redirect
+						to={{
+							pathname: "/login",
+							state: { from: location }
+						}}
+					/>
+				)
+			}
+		/>
+	);
+}
+
+const PublicRoute = ({ children, isAuthenticated, ...rest }) => {
+	return (
+		<Route
+			{...rest}
+			render={({ location }) =>
+				!isAuthenticated ? (
+					children
+				) : (
+					<Redirect
+						to={{
+							pathname: "/",
+							state: { from: location }
+						}}
+					/>
+				)
+			}
+		/>
+	);
 }
 
 const Application = () => {
 	const application = useSelector(state => state.application);
 	const dispatch = useDispatch();
 
-	useEffect(initialize, []);
+	// useEffect(initialize, []);
 
-	function initialize() {
-		dispatch(ApplicationActionCreators.initializeApplication());
-		
-		if (application.isInitialized) {
-			dispatch(ApplicationActionCreators.getInfo());
-		}
-	}
+	// function initialize() {
+	// 	if (application.isAuthenticated) {
+	// 		dispatch(ApplicationActionCreators.getInfo());
+	// 	}
+	// }
 
 	return (
-		<BrowserRouter>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<Switch>
-					<PrivateRoute isAuthenticated={application.isAuthenticated} path="/" exact>
-						<Home />
-					</PrivateRoute>
-					<PrivateRoute isAuthenticated={application.isAuthenticated} path="/anime/:slug" exact>
-						<Home />
-					</PrivateRoute>
-					<Route path="/login" exact>
-						<Auth />
-					</Route>
-				</Switch>
-			</ThemeProvider>
-		</BrowserRouter>
+		<SnackbarProvider maxSnack={3}>
+			<BrowserRouter>
+				<ThemeProvider theme={theme}>
+					<CssBaseline />
+					<Switch>
+						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/" exact>
+							<Home />
+						</PrivateRoute>
+						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/anime/:slug" exact>
+							<Home />
+						</PrivateRoute>
+						<PublicRoute isAuthenticated={application.isAuthenticated} path="/login" exact>
+							<Auth page="login" />
+						</PublicRoute>
+						<PublicRoute isAuthenticated={application.isAuthenticated} path="/join" exact>
+							<Auth page="join" />
+						</PublicRoute>
+						<Redirect to="/404" />
+					</Switch>
+				</ThemeProvider>
+			</BrowserRouter>
+		</SnackbarProvider>
 	);
 }
 

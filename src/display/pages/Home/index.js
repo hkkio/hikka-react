@@ -16,7 +16,7 @@ import { SearchDrawer } from './SearchDrawer';
 import { AnimeActionCreators } from "../../../state/action";
 
 const Home = () => {
-	const defaultSearchState = {status: false, query: "", genres: [], categories: [], teams: [], states: [], minYear: 0, maxYear: 0};
+	const defaultSearchState = { status: false, query: "", genres: [], categories: [], teams: [], states: [], minYear: 0, maxYear: 0 };
 	
 	const [ searchDrawerState, setSearchDrawerState ] = useState(defaultSearchState);
 	const [ animeDrawerState, setAnimeDrawerState ] = useState({status: false});

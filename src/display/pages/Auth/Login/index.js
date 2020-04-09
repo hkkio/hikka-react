@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, Redirect } from "react-router-dom";
+import { useSnackbar } from 'notistack';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -29,22 +30,31 @@ const Login = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const loginUserStatus = useSelector(state => state.application.loginUser);
+	const { enqueueSnackbar } = useSnackbar();
 
 	let history = useHistory();
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		if (loginUserStatus == 1) {
+			enqueueSnackbar('Щось пішло не так.', { variant: 'error' });
+		}
+
+		if (loginUserStatus == 2) {
+			dispatch(ApplicationActionCreators.resetStatuses());
+	      	return <Redirect to="/" />;
+	    }
+	}, [loginUserStatus]);
+
     const openSignupPage = () => {
-        history.push('/signup');
+        history.push('/join');
+        dispatch(ApplicationActionCreators.resetStatuses());
     }
 
     const login = (e) => {
     	e.preventDefault();
 		dispatch(ApplicationActionCreators.loginUser({email, password}));
 	}
-
-	if (loginUserStatus == 2) {
-      return <Redirect to="/" />;
-    }
 
 	return (
 		<form autoComplete="off" onSubmit={(e) => login(e)}>
@@ -67,83 +77,6 @@ const Login = () => {
 					<Button variant="text" fullWidth color="primary" onClick={() => openSignupPage()}>
 						Зареєстуватись
 					</Button>
-				</Grid>
-			</Grid>
-		</form>
-	);
-}
-
-const SignUp = ({setDrawerState}) => {
-	const [email, setEmail] = useState("");
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const [passwordCheck, setPasswordCheck] = useState("");
-	const [errors, setErrors] = useState({email: false, username: false, password: false, passwordCheck: false});
-
-	const dispatch = useDispatch();
-
-	const join = () => {
-		if (email == "") {
-			setErrors({...errors, email: true});
-			return;
-		}
-
-		if (username == "") {
-			setErrors({...errors, username: true});
-			return;
-		}
-
-		if (password == "") {
-			setErrors({...errors, password: true});
-			return;
-		}
-
-		if (passwordCheck == "") {
-			setErrors({...errors, passwordCheck: true});
-			return;
-		}
-
-		if (password == passwordCheck) {
-			dispatch(ApplicationActionCreators.joinUser({username, email, password}));
-
-			setEmail("");
-			setUsername("");
-			setPassword("");
-			setPasswordCheck("");
-			setErrors({email: false, username: false, password: false, passwordCheck: false});
-
-			return;
-		}
-
-		setErrors({...errors, passwordCheck: true});
-		return;
-	}
-
-	return (
-		<form autoComplete="off">
-			<Grid container direction="column">
-				<Grid>
-					<Typography component="h2" variant="h5" style={{fontWeight: 600}} align="center">Реєстрація</Typography>
-				</Grid>
-				<Grid>
-					<TextField error={errors.username} required label="Нікнейм" margin="normal" fullWidth value={username} onChange={(event) => setUsername(event.target.value)} />
-				</Grid>
-				<Grid>
-					<TextField error={errors.email} required label="Email" margin="normal" type="email" fullWidth value={email} onChange={(event) => setEmail(event.target.value)} />
-				</Grid>
-				<Grid>
-					<TextField error={errors.password} required label="Пароль" margin="normal" type="password" fullWidth value={password} onChange={(event) => setPassword(event.target.value)} />
-				</Grid>
-				<Grid>
-					<TextField error={errors.passwordCheck} required label="Підтвердіть пароль" margin="normal" type="password" fullWidth value={passwordCheck} onChange={(event) => setPasswordCheck(event.target.value)} />
-				</Grid>
-				<Grid>
-					<Button variant="outlined" fullWidth color="primary" style={{marginTop: 30, marginBottom: 10}} onClick={() => join()}>
-						Зареєстуватись
-					</Button>
-				</Grid>
-				<Grid>
-					<Typography component="p" variant="subtitle1" align="center">Вже маєте акаунт? <Link onClick={() => setDrawerState({status: true, content: 1}) }>Увійти</Link></Typography>
 				</Grid>
 			</Grid>
 		</form>

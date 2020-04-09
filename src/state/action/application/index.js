@@ -13,7 +13,12 @@ const ApplicationActionTypes = {
 
   LOGIN_USER_REQUEST: "LOGIN_USER_REQUEST",
   LOGIN_USER_ERROR: "LOGIN_USER_ERROR",
-  LOGIN_USER_SUCCESS: "LOGIN_USER_SUCCESS"
+  LOGIN_USER_SUCCESS: "LOGIN_USER_SUCCESS",
+
+  LOGOUT_USER_REQUEST: "LOGOUT_USER_REQUEST",
+  LOGOUT_USER_SUCCESS: "LOGOUT_USER_SUCCESS",
+
+  RESET_STATUSES: "RESET_STATUSES",
 };
 
 // initializeApplication
@@ -106,6 +111,28 @@ function loginUserSuccess(data) {
   };
 }
 
+// logoutUser
+
+function logoutUser() {
+  return {
+    type: ApplicationActionTypes.LOGOUT_USER_REQUEST
+  };
+}
+
+function logoutUserSuccess() {
+  return {
+    type: ApplicationActionTypes.LOGOUT_USER_SUCCESS
+  };
+}
+
+// resetStatuses
+
+function resetStatuses() {
+  return {
+    type: ApplicationActionTypes.RESET_STATUSES
+  };
+}
+
 
 const ApplicationActionCreators = {
   initializeApplication,
@@ -119,7 +146,10 @@ const ApplicationActionCreators = {
   joinUserSuccess,
   loginUser,
   loginUserError,
-  loginUserSuccess
+  loginUserSuccess,
+  logoutUser,
+  logoutUserSuccess,
+  resetStatuses
 };
 
 export { ApplicationActionTypes, ApplicationActionCreators };

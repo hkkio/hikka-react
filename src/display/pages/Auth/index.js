@@ -8,32 +8,28 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Hidden from '@material-ui/core/Hidden';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
-
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import icon from '../../../data/icon.svg';
 import { Login } from './Login';
+import { SignUp } from './SignUp';
 
 import { ApplicationActionCreators } from "../../../state/action";
 
-const Auth = () => {
-  	const dispatch = useDispatch();
-  	const application = useSelector(state => state.application);
-
-	useEffect(initialize, []);
-	function initialize() {
-		// dispatch(ApplicationActionCreators.loginUser)
-
-	}
+const Auth = ({page}) => {
+	// const theme = useTheme();
+ //  	const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
   	return (
-  		<Box textAlign="center" style={{height: window.innerHeight, backgroundSize: "cover", backgroundPosition: "left", backgroundRepeat: "no-repeat", backgroundImage: "url(https://images3.alphacoders.com/782/thumb-1920-782991.jpg)"}}>
-			<Hidden>
-				<Paper elevation={10} style={{width: 550, height: "100%", padding: 20, paddingTop: 30 }}>
+  		<Box textAlign="center" style={{height: "100vh", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundImage: "url(https://images3.alphacoders.com/782/thumb-1920-782991.jpg)"}}>
+			<Box height="100%" width={{sm: "50%", md: "550px"}}>
+				<Paper elevation={10} style={{height: "100%", padding: 20, paddingTop: 30 }}>
 					<img src={icon}  style={{paddingBottom: 20}} />
-					<Login />
+					{page == "login" && <Login />}
+					{page == "join" && <SignUp />}
 				</Paper>
-			</Hidden>
+			</Box>
 		</Box>
   	);
 }

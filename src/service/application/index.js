@@ -39,11 +39,7 @@ function applicationInitialize() {
 
 function getInfo() {
 	return {
-		genres: [{name: "Комедія", slug: "comedy"}, {name: "Романтика", slug: "romance"}, {name: "Драма", slug: "drama"}, {name: "Екшн", slug: "action"}, {name: "Школа", slug: "school"}], 
-		categories: [{name: "TV серіал", slug: "tv"}, {name: "OVA", slug: "ova"}, {name: "Фільм", slug: "movie"}], 
-		teams: [{name: "Fanvox", slug: "fanvox"}], 
-		minYear: 2008, 
-		states: [{name: "Онгоінг", slug: "ongoing"}, {name: "Анонс", slug: "planned"}, {name: "Випущений", slug: "released"}]
+		
 	};
 }
 

@@ -32,6 +32,19 @@ const handleLoginUserRequest = function*(action) {
   }
 };
 
+const handleLogoutUserRequest = function*(action) {
+  try {
+    // const data = yield call(loginUser, action.payload);
+    localStorage.removeItem("token");
+    localStorage.removeItem("expire");
+
+    yield put(ApplicationActionCreators.logoutUserSuccess());
+  } catch (error) {
+    // yield put(ApplicationActionCreators.loginUserError(error));
+
+  }
+};
+
 const handleGetInfoRequest = function*() {
   try {
     const data = yield call(getInfo);
@@ -66,6 +79,10 @@ const Saga = function*() {
   yield takeLatest(
     ApplicationActionTypes.LOGIN_USER_REQUEST,
     handleLoginUserRequest
+  );
+  yield takeLatest(
+    ApplicationActionTypes.LOGOUT_USER_REQUEST,
+    handleLogoutUserRequest
   );
 };
 
