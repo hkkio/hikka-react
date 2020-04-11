@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 import { Footer } from './Footer';
 import { Header } from './Header';
@@ -15,7 +16,7 @@ import { SearchDrawer } from './SearchDrawer';
 
 import { AnimeActionCreators } from "../../../state/action";
 
-const Home = () => {
+const HomeScreen = () => {
 	const defaultSearchState = { status: false, query: "", genres: [], categories: [], teams: [], states: [], minYear: 0, maxYear: 0 };
 	
 	const [ searchDrawerState, setSearchDrawerState ] = useState(defaultSearchState);
@@ -24,6 +25,8 @@ const Home = () => {
   	const dispatch = useDispatch();
   	const anime = useSelector(state => state.anime);
   	let { slug } = useParams();
+
+  	
 
 	useEffect(initialize, []);
 	function initialize() {
@@ -43,15 +46,17 @@ const Home = () => {
 			<AnimeDrawer drawerState={animeDrawerState} setDrawerState={setAnimeDrawerState} />
 			{anime.bannerAnimeList != null ? <Slider data={anime.bannerAnimeList} setDrawerState={setAnimeDrawerState} /> : <SliderSceleton />}
 			<Container>
-				{anime.animeList != null ? <AnimeList data={anime.animeList} setDrawerState={setAnimeDrawerState} /> : <AnimeListSceleton />}
+				<Box mt={2}>
+					{anime.animeList != null ? <AnimeList data={anime.animeList} setDrawerState={setAnimeDrawerState} /> : <AnimeListSceleton />}
+				</Box>
 			</Container>
 			<Footer />
 		</div>
   	);
 }
 
-Home.propTypes = {
+HomeScreen.propTypes = {
 
 };
 
-export {Home};
+export {HomeScreen};

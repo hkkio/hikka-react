@@ -1,4 +1,3 @@
-import {bannerAnimeList} from "../../data";
 import config from "../../display/application/config";
 import axios from "axios";
 
@@ -14,7 +13,7 @@ function getAnimeList(payload) {
 	    }
 	})
 	.then(response => {
-		return [...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice(), ...response.data.data.slice()];
+		return response.data.data;
 	})
 	.catch(error => {
 		throw new Error(error.response.data.error.message);
@@ -31,7 +30,7 @@ function getAnime(payload) {
 	    }
 	})
 	.then(response => {
-		return response.data;
+		return response.data.data;
 	})
 	.catch(error => {
 		throw new Error(error.response.data.error.message);
@@ -39,9 +38,24 @@ function getAnime(payload) {
 }
 
 function getBannerAnimeList() {
-  return () => {
-    return bannerAnimeList;
-  };
+  // return () => {
+  //   return bannerAnimeList;
+  // };
+
+	return axios({
+		method: "get",
+		url: config.apiHost + "anime/selected",
+		headers: {
+	        'Authentication': localStorage.token,
+	        'Content-Type': 'application/json'
+	    }
+	})
+	.then(response => {
+		return response.data.data;
+	})
+	.catch(error => {
+		throw new Error(error.response.data.error.message);
+	})
 }
 
 export { getAnimeList, getAnime, getBannerAnimeList };

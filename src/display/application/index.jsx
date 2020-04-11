@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import {
-	Home,
-	Auth,
-	ErrorComponent,
+	HomeScreen,
+	PlayerScreen,
+	AuthScreen,
+	ErrorScreen,
 } from "../pages";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -67,24 +68,33 @@ const Application = () => {
 	// }
 
 	return (
-		<SnackbarProvider maxSnack={3}>
+		<SnackbarProvider maxSnack={3} anchorOrigin={{
+			vertical: 'top',
+			horizontal: 'right',
+		}}>
 			<BrowserRouter>
 				<ThemeProvider theme={theme}>
 					<CssBaseline />
 					<Switch>
 						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/" exact>
-							<Home />
+							<HomeScreen />
 						</PrivateRoute>
 						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/anime/:slug" exact>
-							<Home />
+							<HomeScreen />
+						</PrivateRoute>
+						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/anime/:slug/watch/:episode" exact>
+							<PlayerScreen />
 						</PrivateRoute>
 						<PublicRoute isAuthenticated={application.isAuthenticated} path="/login" exact>
-							<Auth page="login" />
+							<AuthScreen page="login" />
 						</PublicRoute>
 						<PublicRoute isAuthenticated={application.isAuthenticated} path="/join" exact>
-							<Auth page="join" />
+							<AuthScreen page="join" />
 						</PublicRoute>
-						<Redirect to="/404" />
+						<Route path="/404" exact>
+							<ErrorScreen />
+						</Route>
+		
 					</Switch>
 				</ThemeProvider>
 			</BrowserRouter>

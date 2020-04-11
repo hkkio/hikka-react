@@ -28,7 +28,7 @@ const handleGetAnimeRequest = function*(action) {
 
 const handleGetBannerAnimeListRequest = function*() {
   try {
-    const data = yield call(getBannerAnimeList());
+    const data = yield call(getBannerAnimeList);
     yield put(AnimeActionCreators.getBannerAnimeListSuccess(data));
   } catch (error) {
     yield put(AnimeActionCreators.getBannerAnimeListError(error));

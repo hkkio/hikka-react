@@ -52,7 +52,7 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
 
 	return (
 		<Drawer anchor="top" open={drawerState.status} onClose={() => setDrawerState({...defaultState, status: false})}>
-			<Container style={{paddingTop: 20, paddingBottom: 50}}>
+			<Container style={{paddingTop: 20, paddingBottom: 20}}>
 		    	<Grid container spacing={4}>
 		    		<Grid item md xs>
 		    			<TextField autoFocus={true} value={drawerState.query} onChange={(event) => setDrawerState({...drawerState, query: event.target.value}) } variant="filled" fullWidth margin='normal' label="Фраза для пошуку"/>
@@ -133,12 +133,12 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
 			<Hidden only="xs">
 			    <Paper square elevation={3}>
 					<Container>
-						<Grid container spacing={2} align="right" alignItems="center" justify="center">
+						<Grid container align="right" alignItems="center" justify="center"  style={{paddingTop: 10, paddingBottom: 10}}>
 							<Grid item md>
-								<Button color="primary" variant="outlined" style={{margin: 10}} onClick={() => clearFilters()}>
+								<Button color="primary" variant="outlined" style={{marginLeft: 10}} onClick={() => clearFilters()}>
 					        		Очистити
 					        	</Button>
-								<Button color="primary" variant="contained" style={{margin: 10}} onClick={() => search()}>
+								<Button color="primary" variant="contained" style={{marginLeft: 10}} onClick={() => search()}>
 					        		Пошук
 					        	</Button>
 							</Grid>

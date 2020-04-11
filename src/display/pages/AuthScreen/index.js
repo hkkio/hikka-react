@@ -17,7 +17,7 @@ import { SignUp } from './SignUp';
 
 import { ApplicationActionCreators } from "../../../state/action";
 
-const Auth = ({page}) => {
+const AuthScreen = ({page}) => {
 	// const theme = useTheme();
  //  	const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -34,8 +34,8 @@ const Auth = ({page}) => {
   	);
 }
 
-Auth.propTypes = {
+AuthScreen.propTypes = {
 
 };
 
-export { Auth };
+export { AuthScreen };

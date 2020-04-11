@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimeActionCreators } from "../../../state/action";
 import config from "../../application/config";
+import { getGenres, getState } from "../../../utils/AnimeUtils";
 
 
 const useStyles = makeStyles({
@@ -86,13 +87,13 @@ const InfoTooltip = ({anime}) => {
                <Typography component="span" variant="body2" style={{fontWeight: 600}}>Опис: </Typography> {makeDescription()}
             </Typography>
             <Typography component="p" variant="body2" gutterBottom={true}>
-               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Жанр: </Typography> {makeGenres()}
+               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Жанр: </Typography> {getGenres(anime.genres).join(", ")}
             </Typography>
             <Typography component="p" variant="body2" gutterBottom={true}>
-               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Статус: </Typography> {anime.state.name}
+               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Статус: </Typography> {getState(anime.state)}
             </Typography>
             <Typography component="p" variant="body2">
-               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Рік випуску: </Typography> {anime.state.name}
+               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Рік випуску: </Typography> {anime.year}
             </Typography>
         </div>
     )
@@ -120,7 +121,7 @@ const AnimeItem = ({anime, width, setDrawerState}) => {
                 />
                 {"episodes" in anime && <div className={classes.overlay}>
                   <Typography component="span" className={classes.episodes}>
-                    {anime.episodes.released ? anime.episodes.released : "0"}/{anime.episodes.general ? anime.episodes.general : "?"}
+                    {anime.episodes.released ? anime.episodes.released : "0"}/{anime.episodes.total ? anime.episodes.total : "?"}
                   </Typography>
                </div>}
                 <CardContent className={classes.content}>

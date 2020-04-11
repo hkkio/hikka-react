@@ -9,12 +9,13 @@ import Button from '@material-ui/core/Button';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimeActionCreators } from "../../../state/action";
+import { getGenres } from "../../../utils/AnimeUtils";
 
 const SliderItem = ({anime, setDrawerState}) => {
     let history = useHistory();
     const dispatch = useDispatch();
 	const styles = {
-		backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${anime.banner.url})`,
+		backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${anime.banner})`,
 		backgroundSize: 'cover',
 		height: '568px',
 		width: '100%',
@@ -51,7 +52,7 @@ const SliderItem = ({anime, setDrawerState}) => {
 				        <Grid item md xs={12}>
 				        	<Box textAlign={{xs: "left", md: "right"}}>
 				        		<Box fontSize={48} component="span" fontWeight="600">{anime.episodes.released}</Box>
-				        		<Box fontSize={24} component="span" fontWeight="600" color="rgba(255, 255, 255, 0.5)">/{anime.episodes.general ? anime.episodes.general : "?"}</Box>
+				        		<Box fontSize={24} component="span" fontWeight="600" color="rgba(255, 255, 255, 0.5)">/{anime.episodes.total ? anime.episodes.total : "?"}</Box>
 				        	</Box>
 				        </Grid>
 			        </Grid>
@@ -62,7 +63,7 @@ const SliderItem = ({anime, setDrawerState}) => {
 				        </Grid>
 				        <Grid item xs={12} md={3}>
 				        	<Box fontSize={18} component="p" mb={0} fontWeight="600">Жанр</Box>
-				        	<Box fontSize={16} component="p" m={0}>{anime.genres.map((genre) => genre + " ")}</Box>
+				        	<Box fontSize={16} component="p" m={0}>{getGenres(anime.genres).join(", ")}</Box>
 				        </Grid>
 			        </Grid>
 			</Container>
