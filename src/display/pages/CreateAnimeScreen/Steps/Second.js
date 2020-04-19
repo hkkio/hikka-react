@@ -132,7 +132,7 @@ export const Second = ({anime, setActiveStep}) => {
 						    </CardActions>
 			            </Card>
 					</Grid>
-					<Grid item md={10} sm={10} xs={12}>
+					<Grid item md={10} sm={12} xs={12}>
 						<Card className={classes.card} variant="outlined" > 
 							<label htmlFor="banner">
 				              <CardActionArea component="span">
