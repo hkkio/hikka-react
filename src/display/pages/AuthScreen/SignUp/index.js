@@ -44,16 +44,18 @@ const SignUp = ({setDrawerState}) => {
 	useEffect(() => {
 		if (joinUserStatus == 2) {
 			setOpenSuccessDialog(true);
-			setEmail("");
-			setUsername("");
-			setPassword("");
-			setPasswordCheck("");
-			setPasswordComparison(true);
+			
 		}
 	}, [joinUserStatus]);
 
 	const handleCloseSuccessDialog = () => {
 		setOpenSuccessDialog(false);
+		setEmail("");
+		setUsername("");
+		setPassword("");
+		setPasswordCheck("");
+		setPasswordComparison(true);
+
 		openLoginPage();
 	};
 

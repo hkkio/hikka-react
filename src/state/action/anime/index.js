@@ -3,7 +3,7 @@ const AnimeActionTypes = {
   GET_ANIMELIST_ERROR: "GET_ANIMELIST_ERROR",
   GET_ANIMELIST_SUCCESS: "GET_ANIMELIST_SUCCESS",
 
-  SET_ANIMELIST: "SET_ANIMELIST",
+  SET_DEFAUT_ANIMELIST: "SET_DEFAUT_ANIMELIST",
 
   GET_ANIME_REQUEST: "GET_ANIME_REQUEST",
   GET_ANIME_ERROR: "GET_ANIME_ERROR",
@@ -14,6 +14,16 @@ const AnimeActionTypes = {
   GET_BANNER_ANIMELIST_REQUEST: "GET_BANNER_ANIMELIST_REQUEST",
   GET_BANNER_ANIMELIST_ERROR: "GET_BANNER_ANIMELIST_ERROR",
   GET_BANNER_ANIMELIST_SUCCESS: "GET_BANNER_ANIMELIST_SUCCESS",
+
+  NEW_ANIME_REQUEST: "NEW_ANIME_REQUEST",
+  NEW_ANIME_ERROR: "NEW_ANIME_ERROR",
+  NEW_ANIME_SUCCESS: "NEW_ANIME_SUCCESS",
+
+  UPLOAD_FILE_REQUEST: "UPLOAD_FILE_REQUEST",
+  UPLOAD_FILE_ERROR: "UPLOAD_FILE_ERROR",
+  UPLOAD_FILE_SUCCESS: "UPLOAD_FILE_SUCCESS",
+  UPLOAD_FILE_START: "UPLOAD_FILE_START",
+  UPLOAD_FILE_PROGRESS: "UPLOAD_FILE_PROGRESS"
 };
 
 // getAnimeList
@@ -39,12 +49,73 @@ function getAnimeListSuccess(data) {
   };
 }
 
-// setAnime
+// newAnime
 
-function setAnimeList(payload) {
+function newAnime(payload) {
   return {
     payload,
-    type: AnimeActionTypes.SET_ANIMELIST
+    type: AnimeActionTypes.NEW_ANIME_REQUEST
+  };
+}
+
+function newAnimeError(data) {
+  return {
+    payload: data,
+    type: AnimeActionTypes.NEW_ANIME_ERROR
+  };
+}
+
+function newAnimeSuccess(data) {
+  return {
+    payload: data,
+    type: AnimeActionTypes.NEW_ANIME_SUCCESS
+  };
+}
+
+// newAnime
+
+function uploadFile(payload) {
+  return {
+    payload,
+    type: AnimeActionTypes.UPLOAD_FILE_REQUEST
+  };
+}
+
+function uploadFileStart(payload) {
+  return {
+    payload,
+    type: AnimeActionTypes.UPLOAD_FILE_START
+  };
+}
+
+function uploadFileProgress(payload) {
+  return {
+    payload,
+    type: AnimeActionTypes.UPLOAD_FILE_PROGRESS
+  };
+}
+
+function uploadFileError(data) {
+  return {
+    payload: data,
+    type: AnimeActionTypes.UPLOAD_FILE_ERROR
+  };
+}
+
+function uploadFileSuccess(data) {
+  return {
+    payload: data,
+    type: AnimeActionTypes.UPLOAD_FILE_SUCCESS
+  };
+}
+
+
+// setDefaultAnimeList
+
+function setDefaultAnimeList(payload) {
+  return {
+    payload,
+    type: AnimeActionTypes.SET_DEFAUT_ANIMELIST
   };
 }
 
@@ -57,9 +128,9 @@ function getAnime(payload) {
   };
 }
 
-function getAnimeError(error) {
+function getAnimeError(payload) {
   return {
-    payload: { error },
+    payload,
     type: AnimeActionTypes.GET_ANIME_ERROR
   };
 }
@@ -90,9 +161,9 @@ function getBannerAnimeList() {
   };
 }
 
-function getBannerAnimeListError(error) {
+function getBannerAnimeListError(payload) {
   return {
-    payload: { error },
+    payload,
     type: AnimeActionTypes.GET_BANNER_ANIMELIST_ERROR
   };
 }
@@ -109,8 +180,18 @@ const AnimeActionCreators = {
   getAnimeList,
   getAnimeListError,
   getAnimeListSuccess,
-  // setAnime
-  setAnimeList,
+  // newAnime
+  newAnime,
+  newAnimeError,
+  newAnimeSuccess,
+  // uploadFile
+  uploadFile,
+  uploadFileError,
+  uploadFileSuccess,
+  uploadFileStart,
+  uploadFileProgress,
+  // setDefaultAnimeList
+  setDefaultAnimeList,
   // getAnime
   getAnime,
   getAnimeError,

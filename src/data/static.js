@@ -44,10 +44,6 @@ export const genres = [
 		"name": "Гарем"
 	},
 	{
-		"slug": "hentai",
-		"name": "Хентий"
-	},
-	{
 		"slug": "historical",
 		"name": "Історичне"
 	},
@@ -148,7 +144,7 @@ export const genres = [
 		"name": "Спорт"
 	},
 	{
-		"slug": "superpower",
+		"slug": "super_power",
 		"name": "Суперсила"
 	},
 	{
@@ -208,6 +204,29 @@ export const states = [
 	{
 		"slug": "announced",
 		"name": "Анонс"
+	}
+];
+
+export const seasons = [
+	{
+		"value": 1,
+		"name": "Зима",
+		"slug": "winter"
+	},
+	{
+		"value": 2,
+		"name": "Весна",
+		"slug": "spring"
+	},
+	{
+		"value": 3,
+		"name": "Літо",
+		"slug": "summer"
+	},
+	{
+		"value": 4,
+		"name": "Осінь",
+		"slug": "fall"
 	}
 ];
 

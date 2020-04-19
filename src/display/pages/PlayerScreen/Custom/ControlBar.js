@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
+import Fade from '@material-ui/core/Fade';
 
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
@@ -122,61 +123,63 @@ export const Bar = (props) => {
 	}
 	
 	return (
-		<Box position="absolute" bottom={0} zIndex="modal" width="100%" height={150} px={2} style={{backgroundImage: "linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.40) 29%, #000000 100%)"}}>
-			<Grid container alignItems="center" style={{height: "100%"}} spacing={2}>
-				<Grid item md={12} xs={12} sm={12}>
-					<ProgressSlider value={time} onChange={(e, time) => seekAnime(time, "handle")} onChangeCommitted={(e, time) => seekAnime(time, "end")} step={1} min={0} max={player.duration} />
-				</Grid>
-		        <Grid item md sm>
-					<Grid container alignItems="center" justify="flex-start" spacing={2} wrap="nowrap">
-						<Grid item>
-							<IconButton onClick={toggleAnime}>
-								{player.paused ? <PlayArrowIcon style={{ fontSize: iconSize }} /> : <PauseIcon style={{ fontSize: iconSize }} />}
-							</IconButton>
-						</Grid>
-						<Hidden only="xs">
+		<Fade in={player.userActivity}>
+			<Box position="absolute" bottom={0} zIndex="modal" width="100%" height={150} px={2} style={{backgroundImage: "linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.40) 29%, #000000 100%)", cursor: player.userActivity ? "pointer" : "none"}}>
+				<Grid container alignItems="center" style={{height: "100%"}} spacing={2}>
+					<Grid item md={12} xs={12} sm={12}>
+						<ProgressSlider value={time} onChange={(e, time) => seekAnime(time, "handle")} onChangeCommitted={(e, time) => seekAnime(time, "end")} step={1} min={0} max={player.duration} />
+					</Grid>
+			        <Grid item md sm>
+						<Grid container alignItems="center" justify="flex-start" spacing={2} wrap="nowrap">
 							<Grid item>
-								<VolumeDown fontSize={"large"} />
+								<IconButton onClick={toggleAnime}>
+									{player.paused ? <PlayArrowIcon style={{ fontSize: iconSize }} /> : <PauseIcon style={{ fontSize: iconSize }} />}
+								</IconButton>
 							</Grid>
-							<Grid item md={6} sm>
-								<VolumeSlider aria-labelledby="continuous-slider" value={player.volume} step={0.01} min={0} max={1} onChange={(e, vol) => changeVolume(vol)} />
+							<Hidden only="xs">
+								<Grid item>
+									<VolumeDown fontSize={"large"} />
+								</Grid>
+								<Grid item md={6} sm>
+									<VolumeSlider aria-labelledby="continuous-slider" value={player.volume} step={0.01} min={0} max={1} onChange={(e, vol) => changeVolume(vol)} />
+								</Grid>
+								<Grid item>
+									<VolumeUp fontSize={"large"} />
+								</Grid>
+							</Hidden>
+						</Grid>
+					</Grid>
+					<Hidden mdDown>
+						<Grid item align="center" md>
+							<Typography variant="h5" component="h3">
+								{anime.title.ua}
+							</Typography>
+							<Typography variant="h6" component="h4">
+								{episode} серія
+							</Typography>
+						</Grid>
+					</Hidden>
+					<Grid item md sm>
+						<Grid container alignItems="center" justify="flex-end" spacing={2} wrap="nowrap">
+							<Grid item>
+								<IconButton disabled={!(1 <= parseInt(episode) - 1)} onClick={openPrevEpisode}>
+									<SkipPreviousIcon style={{ fontSize: iconSize }} />
+								</IconButton>
 							</Grid>
 							<Grid item>
-								<VolumeUp fontSize={"large"} />
+								<IconButton disabled={!(anime.episodes.total >= parseInt(episode) + 1)} onClick={openNextEpisode}>
+									<SkipNextIcon style={{ fontSize: iconSize }} />
+								</IconButton>
 							</Grid>
-						</Hidden>
-					</Grid>
-				</Grid>
-				<Hidden mdDown>
-					<Grid item align="center" md>
-						<Typography variant="h5" component="h3">
-							{anime.title.ua}
-						</Typography>
-						<Typography variant="h6" component="h4">
-							{episode} серія
-						</Typography>
-					</Grid>
-				</Hidden>
-				<Grid item md sm>
-					<Grid container alignItems="center" justify="flex-end" spacing={2} wrap="nowrap">
-						<Grid item>
-							<IconButton disabled={!(1 <= parseInt(episode) - 1)} onClick={openPrevEpisode}>
-								<SkipPreviousIcon style={{ fontSize: iconSize }} />
-							</IconButton>
-						</Grid>
-						<Grid item>
-							<IconButton disabled={!(anime.episodes.total >= parseInt(episode) + 1)} onClick={openNextEpisode}>
-								<SkipNextIcon style={{ fontSize: iconSize }} />
-							</IconButton>
-						</Grid>
-						<Grid item>
-							<IconButton onClick={toggleFullScreen}>
-								{player.isFullscreen ? <FullscreenExitIcon style={{ fontSize: iconSize }} /> : <FullscreenIcon style={{ fontSize: iconSize }} />}
-							</IconButton>
+							<Grid item>
+								<IconButton onClick={toggleFullScreen}>
+									{player.isFullscreen ? <FullscreenExitIcon style={{ fontSize: iconSize }} /> : <FullscreenIcon style={{ fontSize: iconSize }} />}
+								</IconButton>
+							</Grid>
 						</Grid>
 					</Grid>
 				</Grid>
-			</Grid>
-		</Box>
+			</Box>
+		</Fade>
 	);
 }

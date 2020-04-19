@@ -9,16 +9,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Hidden from '@material-ui/core/Hidden';
 import Slider from '@material-ui/core/Slider';
-import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { AnimeActionCreators } from "../../../../state/action";
 
 import CheckBoxOutlineBlankSharpIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 
+import { createMuiTheme, withStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { AnimeActionCreators } from "../../../../state/action";
+
+import { categories, states, genres, minYear } from "../../../../utils/AnimeUtils";
 
 const Tag = withStyles(theme => ({
   root: {
@@ -28,17 +29,20 @@ const Tag = withStyles(theme => ({
   },
 }))(Button);
 
-const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
+const DrawerComponent = ({drawerState, setDrawerState, defaultState, setPageNumber}) => {
 	const dispatch = useDispatch();
-	const application = useSelector(state => state.application);
 
 	const search = () => {
-        dispatch(AnimeActionCreators.setAnimeList(null));
+		setPageNumber(0);
+        dispatch(AnimeActionCreators.setDefaultAnimeList());
         dispatch(AnimeActionCreators.getAnimeList(drawerState));
-        setDrawerState({...defaultState, status: false});
+        setDrawerState({...drawerState, status: false, hasSearchQuery: true});
     }
 
     const clearFilters = () => {
+    	setPageNumber(0);
+    	dispatch(AnimeActionCreators.setDefaultAnimeList());
+    	dispatch(AnimeActionCreators.getAnimeList(defaultState));
     	setDrawerState({...defaultState, status: true});
     }
 
@@ -51,11 +55,11 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
     }
 
 	return (
-		<Drawer anchor="top" open={drawerState.status} onClose={() => setDrawerState({...defaultState, status: false})}>
-			<Container style={{paddingTop: 20, paddingBottom: 20}}>
+		<Drawer anchor="top" open={drawerState.status} onClose={() => setDrawerState({...drawerState, status: false})}>
+			<Container style={{paddingTop: 20, paddingBottom: 40}}>
 		    	<Grid container spacing={4}>
 		    		<Grid item md xs>
-		    			<TextField autoFocus={true} value={drawerState.query} onChange={(event) => setDrawerState({...drawerState, query: event.target.value}) } variant="filled" fullWidth margin='normal' label="Фраза для пошуку"/>
+		    			<TextField autoFocus={true} value={drawerState.query} type="search" onChange={(event) => setDrawerState({...drawerState, query: event.target.value}) } variant="filled" fullWidth margin='normal' label="Фраза для пошуку"/>
 		    		</Grid>
 		    	</Grid>
 		    	<Grid container spacing={4}>
@@ -64,10 +68,11 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
 							Рік виходу
 						</Typography>
 						<Slider
-						  min={application.minYear}
-						  max={2020}
-						  defaultValue={[application.minYear, 2020]}
-						  onChange={(event, newValue) => setDrawerState({...drawerState, minYear: newValue[0], maxYear: newValue[1]})}
+						  min={minYear}
+						  max={new Date().getFullYear()}
+						  defaultValue={[minYear, new Date().getFullYear()]}
+						  onChange={(event, newValue) => setDrawerState({...drawerState, year: {min: newValue[0], max: newValue[1]}})}
+						  value={[drawerState.year.min, drawerState.year.max]}
 						  step={1}
         				  marks
 						  valueLabelDisplay="auto"
@@ -79,7 +84,7 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
 							Статус
 						</Typography>
 						{
-							application.states.map((state, index) => {
+							states.map((state, index) => {
 								return <Tag size="small" key={index} disableElevation color={drawerState.states.includes(state.slug) ? "primary" : "default"} variant="contained" onClick={() => changeTag("states", state)}>{state.name}</Tag>
 							})
 						}
@@ -89,7 +94,7 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
 							Тип
 						</Typography>
 						{
-							application.categories.map((category, index) => {
+							categories.map((category, index) => {
 								return <Tag size="small" key={index} disableElevation color={drawerState.categories.includes(category.slug) ? "primary" : "default"} variant="contained" onClick={() => changeTag("categories", category)}>{category.name}</Tag>
 							})
 						}
@@ -99,7 +104,7 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
 							Жанри
 						</Typography>
 						{
-							application.genres.map((genre, index) => {
+							genres.map((genre, index) => {
 								return <Tag size="small" key={index} disableElevation color={drawerState.genres.includes(genre.slug) ? "primary" : "default"} variant="contained" onClick={() => changeTag("genres", genre)}>{genre.name}</Tag>
 							})
 						}
@@ -121,7 +126,7 @@ const DrawerComponent = ({drawerState, setDrawerState, defaultState}) => {
 					        	</Button>
 				        	</Grid>
 				        	<Grid item xs>
-					        	<IconButton edge="start" color="primary" onClick={() => setDrawerState({...defaultState, status: false})}>
+					        	<IconButton edge="start" color="primary" onClick={() => setDrawerState({...drawerState, status: false})}>
 							      	<CloseIcon />
 							    </IconButton>
 				        	</Grid>

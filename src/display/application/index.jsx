@@ -6,6 +6,7 @@ import {
 	HomeScreen,
 	PlayerScreen,
 	AuthScreen,
+	CreateAnimeScreen,
 	ErrorScreen,
 } from "../pages";
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -78,6 +79,9 @@ const Application = () => {
 					<Switch>
 						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/" exact>
 							<HomeScreen />
+						</PrivateRoute>
+						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/anime/create" exact>
+							<CreateAnimeScreen />
 						</PrivateRoute>
 						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/anime/:slug" exact>
 							<HomeScreen />

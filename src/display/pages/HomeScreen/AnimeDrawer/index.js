@@ -35,7 +35,7 @@ const Anime = ({anime, setDrawerState, closeAnime}) => {
 
 	return (
 		<div>
-			<Container style={{paddingTop: 20, paddingBottom: 20}}>
+			<Container style={{paddingTop: 20, paddingBottom: 40}}>
 				<Grid container>
 			        <Grid item md xs={12}>
 			        	<Box fontSize={24} fontWeight="600">
@@ -115,7 +115,7 @@ const Anime = ({anime, setDrawerState, closeAnime}) => {
 							<Typography component="p" variant="body2" style={{fontWeight: 600}}>
 								Рейтинг
 							</Typography>
-							<Rating value={anime.rating} readOnly />
+							<Rating value={parseInt(anime.rating)/2} precision={0.5} readOnly />
 						</Box>
 					</Grid>
 				</Grid>
@@ -130,7 +130,7 @@ const Anime = ({anime, setDrawerState, closeAnime}) => {
 							    </IconButton>
 				        	</Grid>
 				        	<Grid item xs>
-								<Button color="primary" variant="contained" edge="start">
+								<Button color="primary" variant="contained" edge="start" onClick={() => history.push(`/anime/${anime.slug}/watch/1`)}>
 					        		Дивитись
 					        	</Button>
 				        	</Grid>
@@ -239,7 +239,7 @@ const DrawerComponent = ({drawerState, setDrawerState}) => {
 
 	return (
 		<Drawer anchor="bottom" open={drawerState.status} onClose={() => closeAnime()}>
-		    {anime.currentAnime != null ? <Anime anime={anime.currentAnime} setDrawerState={setDrawerState} closeAnime={closeAnime} /> : <AnimeSkeleton />}
+		    {anime.currentAnime.data != null ? <Anime anime={anime.currentAnime.data} setDrawerState={setDrawerState} closeAnime={closeAnime} /> : <AnimeSkeleton />}
 	    </Drawer>
 	);
 }

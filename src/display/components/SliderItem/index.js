@@ -59,7 +59,7 @@ const SliderItem = ({anime, setDrawerState}) => {
 			        <Grid container>
 				        <Grid item xs={12} md={3}>
 				        	<Box fontSize={18} component="p" mb={0} fontWeight="600">Рейтинг</Box>
-				        	<Rating value={anime.rating} readOnly />
+				        	<Rating value={parseInt(anime.rating)/2} precision={0.5} readOnly />
 				        </Grid>
 				        <Grid item xs={12} md={3}>
 				        	<Box fontSize={18} component="p" mb={0} fontWeight="600">Жанр</Box>

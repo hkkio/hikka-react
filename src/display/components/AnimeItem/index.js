@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimeActionCreators } from "../../../state/action";
 import config from "../../application/config";
-import { getGenres, getState } from "../../../utils/AnimeUtils";
+import { getGenres, getState, cutDescription } from "../../../utils/AnimeUtils";
 
 
 const useStyles = makeStyles({
@@ -81,10 +81,10 @@ const InfoTooltip = ({anime}) => {
                  <Typography component="h3" variant="caption" gutterBottom={true}>
                     {anime.title.jp}
                 </Typography>
-                <Rating value={anime.rating} readOnly />
+                <Rating value={parseInt(anime.rating)/2} precision={0.5} readOnly />
             </Box>
             <Typography component="p" variant="body2" gutterBottom={true}>
-               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Опис: </Typography> {makeDescription()}
+               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Опис: </Typography> {cutDescription(anime.description)}
             </Typography>
             <Typography component="p" variant="body2" gutterBottom={true}>
                <Typography component="span" variant="body2" style={{fontWeight: 600}}>Жанр: </Typography> {getGenres(anime.genres).join(", ")}
