@@ -6,7 +6,7 @@ import { uuid } from 'uuidv4';
 function getAnimeList(payload) {
 	return axios({
 		method: "post",
-		url: config.apiHost + "anime/list",
+		url: config.apiHost + "/anime/list",
 		data: payload,
 		headers: {
 	        'Authentication': localStorage.token,
@@ -24,7 +24,7 @@ function getAnimeList(payload) {
 function getAnime(payload) {
 	return axios({
 		method: "get",
-		url: `${config.apiHost}anime/get/${payload.slug}`,
+		url: `${config.apiHost}/anime/get/${payload.slug}`,
 		headers: {
 	        'Authentication': localStorage.token,
 	        'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ function getAnime(payload) {
 function newAnime(payload) {
 	return axios({
 		method: "post",
-		url: `${config.apiHost}anime/new`,
+		url: `${config.apiHost}/anime/new`,
 		data: payload,
 		headers: {
 	        'Authentication': localStorage.token,
@@ -89,7 +89,7 @@ function uploadFile(payload, onUploadProgress) {
 
 	return axios({
 		method: "put",
-		url: `${config.apiHost}upload`,
+		url: `${config.apiHost}/upload`,
 		data: form,
 		headers: {
 	        'Authentication': localStorage.token,
@@ -106,13 +106,10 @@ function uploadFile(payload, onUploadProgress) {
 }
 
 function getBannerAnimeList() {
-  // return () => {
-  //   return bannerAnimeList;
-  // };
 
 	return axios({
 		method: "get",
-		url: config.apiHost + "anime/selected",
+		url: config.apiHost + "/anime/selected",
 		headers: {
 	        'Authentication': localStorage.token,
 	        'Content-Type': 'application/json'
