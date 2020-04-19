@@ -84,6 +84,7 @@ function uploadFile(payload, onUploadProgress) {
 	form.append('index', payload.index);
 	form.append('total', payload.total);
 	form.append('uuid', payload.uuid);
+	form.append('offset', payload.offset);
 	form.append('size', payload.file.size);
 
 	return axios({
