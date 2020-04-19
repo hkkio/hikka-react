@@ -63,7 +63,7 @@ function createChunks(payload) {
 
 	for (var i = 0; i < payload.file.size; i+=chunkBytes) {
 		if (i + chunkBytes < payload.file.size) {
-			let blob = payload.file.slice(i, i+chunkBytes-1);
+			let blob = payload.file.slice(i, i+chunkBytes);
 			res.push(blob);
 		} else {
 			let blob = payload.file.slice(i, payload.file.size);
