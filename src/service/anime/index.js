@@ -78,6 +78,7 @@ function uploadFile(payload, onUploadProgress) {
 	const form = new FormData();
 
 	form.append('type', payload.type);
+	fonm.append('subject', 'anime');
 	form.append('slug', payload.slug);
 	form.append('file', payload.file);
 	
