@@ -95,7 +95,7 @@ function uploadFile(payload, onUploadProgress) {
 	        'Authentication': localStorage.token,
 	        'content-type': `multipart/form-data; boundary=${form._boundary}`,
 	    },
-	    onUploadProgress: (progress) => onUploadProgress({total: progress.total, loaded: progress.loaded, chunks: payload.total})
+	    onUploadProgress: (progress) => onUploadProgress({total: progress.total, index: payload.index, loaded: progress.loaded, chunks: payload.total})
 	})
 	.then(response => {
 		return response.data;

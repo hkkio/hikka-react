@@ -61,8 +61,8 @@ function createUploader() {
     return () => {};
   });
 
-  const uploadProgressCb = ({ total, loaded, chunks }) => {
-    const percentage = Math.round(((loaded * 100) / total) / chunks);
+  const uploadProgressCb = ({ total, loaded, chunks, index }) => {
+    const percentage = Math.round(((loaded * 100) / total) / chunks) + ((100/chunks)*(index-1));
     console.log(percentage);
     emit(percentage);
     if (percentage === 100) emit(END);
