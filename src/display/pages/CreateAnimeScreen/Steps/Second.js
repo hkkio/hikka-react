@@ -28,12 +28,14 @@ const useStyles = makeStyles({
     },
     poster: {
         paddingTop: "150%",
-        background: "gray"
+        background: "gray",
+        backgroundSize: "cover"
     },
     banner: {
     	height: 400,
     	width: "100%",
-    	background: "gray"
+    	background: "gray",
+    	backgroundSize: "cover"
     },
 	input: {
 		display: 'none',
@@ -106,12 +108,12 @@ export const Second = ({anime, setActiveStep}) => {
 		        </Grid>}
 				<Grid container spacing={2}>
 					<Grid item md={2} sm={2} xs={12}>
-						<Card className={classes.card} variant="outlined">
+						<Card className={classes.card} variant="outlined" align="center">
 							<label htmlFor="poster">
 				              <CardActionArea component="span">
 				                <CardMedia
 				                  className={classes.poster}
-				                  image={poster != null && URL.createObjectURL(poster)}
+				                  image={poster != null ? URL.createObjectURL(poster) : config.noPosterURL}
 				                />
 				                <CardContent>
 						          <Typography gutterBottom variant="h5" component="h2">
@@ -136,7 +138,7 @@ export const Second = ({anime, setActiveStep}) => {
 				              <CardActionArea component="span">
 				                <CardMedia
 				                  className={classes.banner}
-				                  image={banner != null && URL.createObjectURL(banner)}
+				                  image={banner != null ? URL.createObjectURL(banner) : config.noPosterURL}
 				                />
 				                <CardContent>
 						          <Typography gutterBottom variant="h5" component="h2">

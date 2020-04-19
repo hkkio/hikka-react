@@ -89,7 +89,7 @@ function uploadFile(payload, onUploadProgress) {
 
 	return axios({
 		method: "put",
-		url: `${config.apiHost}system/upload`,
+		url: `${config.apiHost}upload`,
 		data: form,
 		headers: {
 	        'Authentication': localStorage.token,
