@@ -1,17 +1,16 @@
 import React from "react";
 import Grid from '@material-ui/core/Grid';
 
-import { AnimeItem, AnimeItemSceleton } from "../../../components/AnimeItem";
+import { AnimeItem, AnimeItemSceleton } from "./AnimeItem";
 
 
-const AnimeList = ({data, setDrawerState}) => {
+const AnimeList = ({data}) => {
 	return (
 		<Grid container spacing={2}>
 			{
 				data.map(anime => 
 					<Grid item md={2} key={anime.slug} sm={3} xs={6}>
 			          	<AnimeItem
-			          		setDrawerState={setDrawerState}
 			          		anime={anime}
 			          	/>
 				    </Grid>

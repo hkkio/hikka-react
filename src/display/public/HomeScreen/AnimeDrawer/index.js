@@ -36,25 +36,25 @@ const Anime = ({anime, setDrawerState, closeAnime}) => {
 	return (
 		<div>
 			<Container style={{paddingTop: 20, paddingBottom: 40}}>
-				<Grid container>
-			        <Grid item md xs={12}>
-			        	<Box fontSize={24} fontWeight="600">
+				<Grid container spacing={2}>
+			        <Grid item md={9} xs={12}>
+			        	<Typography variant="h3" component="h3">
 			        		{anime.title.ua}
-			        	</Box>
-			        	<Box fontSize={21} color="rgba(0, 0, 0, 0.5)">
+			        	</Typography>
+			        	<Typography variant="h3" component="h3" color="textSecondary">
 			        		{anime.title.jp}
-			        	</Box>
+			        	</Typography>
 			        </Grid>
-			        {"episodes" in anime && <Grid item md xs={12}>
+			        {"episodes" in anime && <Grid item md={3} xs={12}>
 			        	<Box textAlign={{xs: "left", md: "right"}}>
 			        		<Box fontSize={48} component="span" fontWeight="600">{anime.episodes.released ? anime.episodes.released : "0"}</Box>
-			        		<Box fontSize={24} component="span" fontWeight="600" color="rgba(0, 0, 0, 0.5)">/{anime.episodes.total ? anime.episodes.total : "?"}</Box>
+			        		<Typography variant="h3" component="span" color="textSecondary">/{anime.episodes.total ? anime.episodes.total : "?"}</Typography>
 			        	</Box>
 			        </Grid>}
 		        </Grid>
 				<Grid container spacing={2} justify="center">
 					<Grid item md={2} sm={3} xs={8}>
-						<div style={{backgroundImage: `url(${anime.poster != null ? anime.poster : config.noPosterURL})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center", paddingTop: "150%", marginBottom: 10}} />
+						<div style={{background: "lightgray", backgroundImage: `url(${anime.poster != null ? anime.poster : "/"})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center", paddingTop: "150%", marginBottom: 10}} />
 					</Grid>
 					<Grid item md={7} sm={6} xs={12}>
 						<Box mb={2}>
@@ -233,7 +233,7 @@ const DrawerComponent = ({drawerState, setDrawerState}) => {
 	let history = useHistory();
 
 	const closeAnime = () => {
-		setDrawerState({status: false});
+		// setDrawerState({status: false});
 		history.push('/');
 	}
 

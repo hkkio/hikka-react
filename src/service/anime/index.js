@@ -24,7 +24,7 @@ function getAnimeList(payload) {
 function getAnime(payload) {
 	return axios({
 		method: "get",
-		url: `${config.apiHost}/anime/get/${payload.slug}`,
+		url: `${config.apiHost}/anime/fetch/${payload.slug}`,
 		headers: {
 	        'Authentication': localStorage.token,
 	        'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ function newAnime(payload) {
 }
 
 function createChunks(payload) {
-	const chunkBytes = 1024*1024;
+	const chunkBytes = 1024*1024*9;
 	const res = [];
 	const id = uuid();
 

@@ -72,7 +72,7 @@ function newAnimeSuccess(data) {
   };
 }
 
-// newAnime
+// uploadFile
 
 function uploadFile(payload) {
   return {

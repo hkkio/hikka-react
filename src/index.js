@@ -11,7 +11,7 @@ import "video-react/dist/video-react.css"; // import css
 const persistConfig = {
   key: "daily-harvest-web-persist-store",
   storage,
-  whitelist: ['application']
+  whitelist: []
 };
 const { persistor, store } = getStorage(persistConfig);
 const rootElement = document.getElementById("root");

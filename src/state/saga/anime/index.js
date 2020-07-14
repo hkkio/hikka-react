@@ -89,7 +89,7 @@ function* handleUploadFileRequest(action) {
     let res = null;
 
     for (var i = 0; i < chunks.length; i++) {
-      let res = yield call(uploadFile, {...action.payload, file: chunks[i], index: i, offset: (i*chunks[i].size)+1, total: chunks.length, uuid}, uploadProgressCb);
+      res = yield call(uploadFile, {...action.payload, file: chunks[i], index: i, offset: (i*chunks[i].size)+1, total: chunks.length, uuid}, uploadProgressCb);
     }
     
     yield put(AnimeActionCreators.uploadFileSuccess(res));

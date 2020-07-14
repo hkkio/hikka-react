@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -14,16 +14,15 @@ import { useHistory } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { AnimeActionCreators } from "../../../state/action";
-import config from "../../application/config";
-import { getGenres, getState, cutDescription } from "../../../utils/AnimeUtils";
-
+import InfoTooltip from "./InfoTooltip";
 
 const useStyles = makeStyles({
     card: {
         border: "none",
     },
     media: {
-        paddingTop: "150%"
+        paddingTop: "150%",
+        background: "lightgray",
     },
     content: {
         padding: 5,
@@ -58,57 +57,14 @@ const HtmlTooltip = withStyles(theme => ({
   },
 }))(Tooltip);
 
-const InfoTooltip = ({anime}) => {
-    const maxLenDesc = 200;
-
-    const makeGenres = () => {
-        return anime.genres.map(function(genre){
-                return genre.name;
-            }).join(",");
-    }
-
-    const makeDescription = () => {
-        if (anime.description.length <= maxLenDesc) return anime.description;
-        return anime.description.substr(0, anime.description.lastIndexOf(" ", maxLenDesc)) + "...";
-    }
- 
-    return (
-        <div>
-            <Box textAlign="center" mb={2}>
-                <Typography component="h2" variant="subtitle1">
-                    {anime.title.ua}
-                </Typography>
-                 <Typography component="h3" variant="caption" gutterBottom={true}>
-                    {anime.title.jp}
-                </Typography>
-                <Rating value={parseInt(anime.rating)/2} precision={0.5} readOnly />
-            </Box>
-            <Typography component="p" variant="body2" gutterBottom={true}>
-               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Опис: </Typography> {cutDescription(anime.description)}
-            </Typography>
-            <Typography component="p" variant="body2" gutterBottom={true}>
-               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Жанр: </Typography> {getGenres(anime.genres).join(", ")}
-            </Typography>
-            <Typography component="p" variant="body2" gutterBottom={true}>
-               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Статус: </Typography> {getState(anime.state)}
-            </Typography>
-            <Typography component="p" variant="body2">
-               <Typography component="span" variant="body2" style={{fontWeight: 600}}>Рік випуску: </Typography> {anime.year}
-            </Typography>
-        </div>
-    )
-}
-
-const AnimeItem = ({anime, width, setDrawerState}) => {
+const AnimeItem = ({anime}) => {
     const classes = useStyles();
     let history = useHistory();
     const dispatch = useDispatch();
 
     const openAnime = () => {
         dispatch(AnimeActionCreators.setAnime(null));
-        dispatch(AnimeActionCreators.getAnime({slug: anime.slug}));
-        setDrawerState({status: true});
-        history.push('/anime/' + anime.slug);
+        history.push('anime/' + anime.slug);
     }
  
     return (
@@ -117,7 +73,7 @@ const AnimeItem = ({anime, width, setDrawerState}) => {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image={anime.poster != null ? anime.poster : config.noPosterURL}
+                  image={anime.poster != null ? anime.poster : "/"}
                 />
                 {"episodes" in anime && <div className={classes.overlay}>
                   <Typography component="span" className={classes.episodes}>

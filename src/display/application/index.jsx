@@ -6,9 +6,13 @@ import {
 	HomeScreen,
 	PlayerScreen,
 	AuthScreen,
-	CreateAnimeScreen,
 	ErrorScreen,
-} from "../pages";
+} from "../public";
+import {
+	CreateAnimeScreen,
+	AnimeScreen,
+	HomeAdminScreen
+} from "../admin";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { SnackbarProvider } from 'notistack';
@@ -77,11 +81,18 @@ const Application = () => {
 				<ThemeProvider theme={theme}>
 					<CssBaseline />
 					<Switch>
+						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/admin" exact>
+							<HomeAdminScreen />
+						</PrivateRoute>
+						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/admin/anime/new" exact>
+							<CreateAnimeScreen />
+						</PrivateRoute>
+						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/admin/anime/:slug" exact>
+							<AnimeScreen />
+						</PrivateRoute>
+						
 						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/" exact>
 							<HomeScreen />
-						</PrivateRoute>
-						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/anime/create" exact>
-							<CreateAnimeScreen />
 						</PrivateRoute>
 						<PrivateRoute isAuthenticated={application.isAuthenticated} path="/anime/:slug" exact>
 							<HomeScreen />

@@ -3,12 +3,7 @@ import { genres, categories, states, statuses, minYear } from "../../../data/sta
 
 const defaultState = { 
 	user: null,
-	genres,
-    categories,
-    states,
-    statuses,
-	minYear,
-	isAuthenticated: localStorage.token == null ? false : true,
+	isAuthenticated: localStorage.token != null && Date.now()/1000 <= localStorage.expire,
 	loginUser: null,
 	joinUser: null
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import AliceCarousel from 'react-alice-carousel';
 
-import { SliderItem, SliderSceleton } from "../../../components/SliderItem";
+import { SliderItem, SliderSceleton } from "./SliderItem";
 
 const SliderComponent = ({data, setDrawerState}) => {
 

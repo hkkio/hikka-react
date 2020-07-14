@@ -19,4 +19,9 @@ const theme = createMuiTheme({
   },
 });
 
+theme.typography.h3 = {
+  fontWeight: 'bold',
+  fontSize: '24px',
+};
+
 export default theme;

@@ -8,8 +8,8 @@ import { useHistory } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { AnimeActionCreators } from "../../../state/action";
-import { getGenres } from "../../../utils/AnimeUtils";
+// import { AnimeActionCreators } from "../../../state/action";
+import { getGenres } from "../../../../utils/AnimeUtils";
 
 const SliderItem = ({anime, setDrawerState}) => {
     let history = useHistory();
@@ -24,9 +24,9 @@ const SliderItem = ({anime, setDrawerState}) => {
 	}
 
 	const openAnime = () => {
-		dispatch(AnimeActionCreators.setAnime(null));
-        dispatch(AnimeActionCreators.getAnime({slug: anime.slug}));
-        setDrawerState({status: true});
+		// dispatch(AnimeActionCreators.setAnime(null));
+  //       dispatch(AnimeActionCreators.getAnime({slug: anime.slug}));
+  //       setDrawerState({status: true});
         history.push('/anime/' + anime.slug);
     }
 

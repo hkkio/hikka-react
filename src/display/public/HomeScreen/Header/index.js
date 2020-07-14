@@ -45,8 +45,7 @@ function HideOnScroll(props) {
 	);
 }
 
-const Header = (props) => {
-	const { drawerState, setDrawerState, goToMain } = props;
+const Header = () => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const isMenuOpen = Boolean(anchorEl);
 	const classes = useStyles();
@@ -84,62 +83,54 @@ const Header = (props) => {
 	);
 
 	return (
-		<div className={classes.grow}>
-			<HideOnScroll {...props}>
-				<AppBar position="fixed" color='inherit'>
-					<Container>
-						<Toolbar>
-							<Hidden only="xs">
-								<Button color="inherit" onClick={goToMain}>
-									<img src={Logo} width="75%" />
-								</Button>
-								<Button color="inherit">
-									Про нас
-								</Button>
-								<div className={classes.grow} />
-								<Button color="inherit" startIcon={<SearchIcon />} onClick={() => setDrawerState({...drawerState, status: true})}>
-									Пошук
-								</Button>
-								<IconButton
-									edge="end"
-									aria-label="account of current user"
-									aria-controls={menuId}
-									aria-haspopup="true"
-									onClick={handleProfileMenuOpen}
-									color="inherit"
-								>
-									<AccountCircle />
-								</IconButton>
-							</Hidden>
-							<Hidden only={["md", "sm", "lg", "xl"]}>
-								<IconButton edge="start" color="inherit" onClick={() => history.push('/')}>
-									<img src={Logo} width="75%" />
-								</IconButton>
-								<IconButton edge="start" color="inherit">
-									<InfoIcon />
-								</IconButton>
-								<div className={classes.grow} />
-								<IconButton edge="start" color="inherit" onClick={() => setDrawerState({...drawerState, status: true})}>
-									<SearchIcon />
-								</IconButton>
-								
-								<IconButton
-									edge="end"
-									aria-label="account of current user"
-									aria-controls={menuId}
-									aria-haspopup="true"
-									onClick={handleProfileMenuOpen}
-									color="inherit"
-								>
-									<AccountCircle />
-								</IconButton>
-							</Hidden>
-						</Toolbar>
-					</Container>	
-				</AppBar>
-			</HideOnScroll>
+		<React.Fragment>
+			<AppBar position="static" color='inherit'>
+				<Container>
+					<Toolbar>
+						<Hidden only="xs">
+							<Button color="inherit" onClick={() => history.push('/')}>
+								<img src={Logo} width="75%" />
+							</Button>
+							<Button color="inherit">
+								Про нас
+							</Button>
+							<div className={classes.grow} />
+							<IconButton
+								edge="end"
+								aria-label="account of current user"
+								aria-controls={menuId}
+								aria-haspopup="true"
+								onClick={handleProfileMenuOpen}
+								color="inherit"
+							>
+								<AccountCircle />
+							</IconButton>
+						</Hidden>
+						<Hidden only={["md", "sm", "lg", "xl"]}>
+							<IconButton edge="start" color="inherit" onClick={() => history.push('/')}>
+								<img src={Logo} width="75%" />
+							</IconButton>
+							<IconButton edge="start" color="inherit">
+								<InfoIcon />
+							</IconButton>
+							<div className={classes.grow} />
+							<IconButton
+								edge="end"
+								aria-label="account of current user"
+								aria-controls={menuId}
+								aria-haspopup="true"
+								onClick={handleProfileMenuOpen}
+								color="inherit"
+							>
+								<AccountCircle />
+							</IconButton>
+						</Hidden>
+					</Toolbar>
+				</Container>	
+			</AppBar>
+
 			{renderMenu}
-		</div>
+		</React.Fragment>
 	);
 }
 
